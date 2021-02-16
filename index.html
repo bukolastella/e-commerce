@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+      integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" href="Images/EMS.svg" type="image/svg" sizes="32x32" />
+    <title>The E-Millenial Store</title>
+  </head>
+  <body>
+    <!-- introductory content -->
+    <section class="intro" id="intro">
+      <header>
+        <img src="images/EMS.svg" alt="logo image" />
+        <nav>
+          <li><a href="#intro" class="current">intro</a></li>
+          <li><a href="#about">about</a></li>
+          <li><a href="#shop">shop</a></li>
+        </nav>
+        <div class="cart_container">
+          <img src="images/cart.svg" alt="cart image" />
+          <span class="item_no">10</span>
+        </div>
+      </header>
+
+      <div class="main_container">
+        <div class="main_content">
+          <h1>
+            the <br />
+            e&#8209;millenial <br />
+            store
+          </h1>
+          <button><a href="#shop">shop now</a></button>
+        </div>
+        <div class="main_image">
+          <img src="images/heroImage.png" alt="image of a phone" />
+        </div>
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <h1>ABOUT US</h1>
+      <p>
+        E-Millenial Store is an hypothetical online store for gadgets we believe
+        every 'Millenial' or 'Gen-Z' should have today. <br />
+        We've got mobile phones, laptop, smartwatches and other gadgets. Explore
+        all our gadgets and choose the ones that suit you.
+      </p>
+    </section>
+    <section class="shop" id="shop">
+      <h1>our gadgets</h1>
+      <div class="items">
+        <div class="item_image item_image_1">
+          <div class="overlay">
+            <span class="price">price</span>
+            <span class="price_money">&#8358;250,000</span>
+          </div>
+        </div>
+        <h2>samsung tv</h2>
+        <button>add to cart</button>
+      </div>
+      <div class="items">
+        <div class="item_image item_image_2">
+          <div class="overlay">
+            <span class="price">price</span>
+            <span class="price_money">&#8358;250,000</span>
+          </div>
+        </div>
+        <h2>pixel 4a</h2>
+        <button>add to cart</button>
+      </div>
+      <div class="items">
+        <div class="item_image item_image_3">
+          <div class="overlay">
+            <span class="price">price</span>
+            <span class="price_money">&#8358;250,000</span>
+          </div>
+        </div>
+        <h2>ps 5</h2>
+        <button>add to cart</button>
+      </div>
+      <div class="items">
+        <div class="item_image item_image_4">
+          <div class="overlay">
+            <span class="price">price</span>
+            <span class="price_money">&#8358;250,000</span>
+          </div>
+        </div>
+        <h2>macbook air</h2>
+        <button>add to cart</button>
+      </div>
+      <div class="items">
+        <div class="item_image item_image_5">
+          <div class="overlay">
+            <span class="price">price</span>
+            <span class="price_money">&#8358;250,000</span>
+          </div>
+        </div>
+        <h2>apple watch</h2>
+        <button>add to cart</button>
+      </div>
+      <div class="items">
+        <div class="item_image item_image_6">
+          <div class="overlay">
+            <span class="price">price</span>
+            <span class="price_money">&#8358;250,000</span>
+          </div>
+        </div>
+        <h2>air pods</h2>
+        <button>add to cart</button>
+      </div>
+    </section>
+    <section class="shopping_cart hidden">
+      <table>
+        <thead>
+          <tr>
+            <th>S/N</th>
+            <th>item</th>
+            <th>price</th>
+            <th>quantity</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="5">No item found in your cart.</td>
+          </tr>
+          <tr class="even">
+            <td>1</td>
+            <td>apple watch</td>
+            <td>&#8358; 74000</td>
+            <td>
+              <i class="fas fa-minus-circle"></i>
+              <span>1</span>
+              <i class="fas fa-plus-circle"></i>
+            </td>
+            <td><button>remove</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <form>
+        <input type="text" id="name" placeholder="Name" />
+        <p class="error1"></p>
+        <input type="email" name="email" id="email" placeholder="Email" />
+        <p class="error2"></p>
+        <input type="tel" name="tel" id="tel" placeholder="Your Phone Number" />
+        <p class="error3"></p>
+      </form>
+      <h1>total amount to be paid</h1>
+      <span>&#8358; 74000</span>
+      <div class="buttons">
+        <button class="continue">continue shopping</button>
+        <button class="checkout">checkout</button>
+      </div>
+    </section>
+    <div class="modal_overlay hidden"></div>
+    <section class="summary hidden">
+      <p>Thank You, <span>ibrahim</span>, your order has been recieved</p>
+      <img src="/Images/check.svg" alt="check image" />
+      <h2>summary</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>S/N</th>
+            <th>item</th>
+            <th>quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="even">
+            <td>1</td>
+            <td>apple watch</td>
+            <td>
+              <span>1</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="buttons">
+        <button class="continue ok">ok</button>
+      </div>
+    </section>
+    <footer>
+      <img src="images/EMS.svg" alt="logo image" />
+      &copy; b.stella
+    </footer>
+    <script src="/js/script.js"></script>
+  </body>
+</html>
