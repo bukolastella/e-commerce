@@ -62,7 +62,7 @@
     </section>
     <section class="shop" id="shop">
       <h1>our gadgets</h1>
-      <div class="items">
+      <div class="items" data-index="1">
         <div class="item_image item_image_1">
           <div class="overlay">
             <span class="price">price</span>
@@ -70,9 +70,9 @@
           </div>
         </div>
         <h2>samsung tv</h2>
-        <button>add to cart</button>
+        <button class="btn btn-add">add to cart</button>
       </div>
-      <div class="items">
+      <div class="items" data-index="2">
         <div class="item_image item_image_2">
           <div class="overlay">
             <span class="price">price</span>
@@ -80,9 +80,9 @@
           </div>
         </div>
         <h2>pixel 4a</h2>
-        <button>add to cart</button>
+        <button class="btn btn-add">add to cart</button>
       </div>
-      <div class="items">
+      <div class="items" data-index="3">
         <div class="item_image item_image_3">
           <div class="overlay">
             <span class="price">price</span>
@@ -90,9 +90,9 @@
           </div>
         </div>
         <h2>ps 5</h2>
-        <button>add to cart</button>
+        <button class="btn btn-add">add to cart</button>
       </div>
-      <div class="items">
+      <div class="items" data-index="4">
         <div class="item_image item_image_4">
           <div class="overlay">
             <span class="price">price</span>
@@ -100,9 +100,9 @@
           </div>
         </div>
         <h2>macbook air</h2>
-        <button>add to cart</button>
+        <button class="btn btn-add">add to cart</button>
       </div>
-      <div class="items">
+      <div class="items" data-index="5">
         <div class="item_image item_image_5">
           <div class="overlay">
             <span class="price">price</span>
@@ -110,9 +110,9 @@
           </div>
         </div>
         <h2>apple watch</h2>
-        <button>add to cart</button>
+        <button class="btn btn-add">add to cart</button>
       </div>
-      <div class="items">
+      <div class="items" data-index="6">
         <div class="item_image item_image_6">
           <div class="overlay">
             <span class="price">price</span>
@@ -120,7 +120,7 @@
           </div>
         </div>
         <h2>air pods</h2>
-        <button>add to cart</button>
+        <button class="btn btn-add">add to cart</button>
       </div>
     </section>
     <section class="shopping_cart hidden">
@@ -134,8 +134,8 @@
             <th></th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
+        <tbody class="cart-table">
+          <!-- <tr>
             <td colspan="5">No item found in your cart.</td>
           </tr>
           <tr class="even">
@@ -143,12 +143,12 @@
             <td>apple watch</td>
             <td>&#8358; 74000</td>
             <td>
-              <i class="fas fa-minus-circle"></i>
+              <i class="fas fa-minus-circle minus-sign min-reached"></i>
               <span>1</span>
-              <i class="fas fa-plus-circle"></i>
+              <i class="fas fa-plus-circle plus-sign"></i>
             </td>
-            <td><button>remove</button></td>
-          </tr>
+            <td><button class= 'remove'>remove</button></td>
+          </tr> -->
         </tbody>
       </table>
       <form>
@@ -160,7 +160,7 @@
         <p class="error3"></p>
       </form>
       <h1>total amount to be paid</h1>
-      <span>&#8358; 74000</span>
+      <span class="total-amount">&#8358; 74000</span>
       <div class="buttons">
         <button class="continue">continue shopping</button>
         <button class="checkout">checkout</button>
@@ -197,6 +197,7 @@
       <img src="images/EMS.svg" alt="logo image" />
       &copy; b.stella
     </footer>
+    <!-- <div class="modal_overlay hidden"></div> -->
     <script src="/js/script.js"></script>
   </body>
 </html>

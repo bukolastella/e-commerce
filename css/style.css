@@ -23,8 +23,10 @@ html {
   height: 100vh;
   padding: var(--padding);
 }
+body {
+  position: relative;
+}
 /* HEADER */
-
 header {
   display: flex;
   justify-content: space-between;
@@ -118,14 +120,17 @@ nav a:hover {
   outline: none;
   border: 0;
   width: 100%;
-  padding: 1rem 3rem;
   border-radius: 10px;
   font-size: 2rem;
   cursor: pointer;
+  /* padding: 1rem 3rem; */
 }
 .main_content button a {
   text-decoration: none;
   color: white;
+  padding: 1rem 3rem;
+  width: 100%;
+  display: block;
 }
 .main_content button:hover {
   background-color: var(--light-orange);
@@ -244,7 +249,7 @@ nav a:hover {
   cursor: pointer;
   padding: 1rem;
 }
-.items button:hover {
+.items .btn-add:hover {
   background-color: var(--orange);
   /* color: white; */
 }
@@ -258,8 +263,10 @@ nav a:hover {
   width: 70%;
   padding: var(--padding);
   border-radius: 5px;
+  /* position: absolute; */
   position: fixed;
   z-index: 6000;
+  /* top: 20vh; */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -270,10 +277,10 @@ table {
   border-collapse: collapse;
   margin-bottom: 2rem;
 }
-th {
-  text-transform: capitalize;
-  border-bottom: 2px solid #111111;
-  text-align: center;
+.div {
+  overflow-y: scroll;
+  height: 100px;
+  width: 100%;
 }
 .even {
   background-color: #efefef;
@@ -286,13 +293,23 @@ td {
   text-align: center;
   text-transform: capitalize;
 }
+th {
+  text-transform: capitalize;
+  border-bottom: 1px solid black;
+  text-align: center;
+}
 td i {
   color: var(--orange);
   cursor: pointer;
   transition: transform 0.2s;
 }
 td i:hover {
+  color: var(--light-orange);
+}
+.min-reached {
   color: #d6d5d5;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 td button {
   text-transform: capitalize;
@@ -455,14 +472,23 @@ footer {
     display: none;
   }
   .main_content button {
-    padding: 1rem 1rem;
+    /* padding: 1rem 1rem; */
     margin-bottom: 2rem;
+  }
+  .main_content button a {
+    padding: 1rem 1rem;
+    width: 100%;
   }
   .shop {
     height: 110rem;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 0.5fr 3fr 3fr 3fr;
     /* gap: 5rem 1rem; */
+  }
+  td button {
+    /* font-weight: bold; */
+    padding: 0.3rem 0.3rem;
+    font-size: 0.8rem;
   }
 }
 @media (max-width: 570px) {
