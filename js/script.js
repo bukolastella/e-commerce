@@ -382,4 +382,3 @@ window.addEventListener("load", function () {
   //update cart length
   updateCartItemsNo();
 });
-//385
