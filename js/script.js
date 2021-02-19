@@ -130,6 +130,9 @@ function renderCartTable() {
             <td colspan="5">No item found in your cart.</td>
           </tr>`;
     cartTable.insertAdjacentHTML("afterbegin", html);
+    //you should not be able to checkout
+    checkout.classList.add("min-reached");
+    checkout.style.backgroundColor = "#d6d5d5";
   } else {
     const html = cartList
       .map(
@@ -151,6 +154,9 @@ function renderCartTable() {
       )
       .join("");
     cartTable.insertAdjacentHTML("afterbegin", html);
+    //you should be able to checkout
+    checkout.classList.remove("min-reached");
+    checkout.style.backgroundColor = "#ff7a00";
   }
 }
 function renderTotalAmount() {
