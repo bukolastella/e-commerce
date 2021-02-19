@@ -399,9 +399,14 @@ form input {
   visibility: hidden;
 }
 /* SUMMARY MODAL */
+.summary {
+  /* border: 1px solid rgb(219, 218, 218); */
+  box-shadow: 0 0 10px #777777;
+}
 .summary p {
   text-transform: capitalize;
   font-size: 1.5rem;
+  text-align: center;
 }
 .summary p > span {
   text-transform: capitalize;
@@ -409,7 +414,7 @@ form input {
   color: var(--orange);
 }
 .summary img {
-  width: 40%;
+  width: 30%;
   margin: 0.5rem;
 }
 .summary h2 {
@@ -535,5 +540,13 @@ footer {
   }
   .shopping_cart > span {
     margin: 0.5rem;
+  }
+  .summary p {
+    font-size: 1rem;
+  }
+  .summary p > span {
+    text-transform: capitalize;
+    font-size: 1.1rem;
+    color: var(--orange);
   }
 }

@@ -39,7 +39,7 @@ const products = [
   },
 ];
 let cartList = [];
-
+let saved;
 const header = document.querySelector("header");
 const intro = document.querySelector(".intro");
 const headerHeight = header.getBoundingClientRect().height;
@@ -60,6 +60,8 @@ const itemNo = document.querySelector(".item_no");
 const cartTable = document.querySelector(".cart-table");
 const totalAmount = document.querySelector(".total-amount");
 const minReached = document.querySelector(".min-reached");
+const summary = document.querySelector(".summary");
+const summaryBtn = document.querySelector(".ok");
 
 // STICKY HEADER IMPLEMENTATION
 const nav = function (entries) {
@@ -75,8 +77,52 @@ const headerObserver = new IntersectionObserver(nav, {
 });
 headerObserver.observe(intro);
 
+// FUNCTIONS
+const removeDisplay = function (button) {
+  button.style.backgroundColor = "#ffe9d6";
+  button.textContent = "remove from cart";
+  button.classList.toggle("btn-add");
+};
+const addDisplay = function (button) {
+  button.style.backgroundColor = "#ff9a3d";
+  button.textContent = "add to cart";
+  button.classList.toggle("btn-add");
+};
+const updateCartItemsNo = function () {
+  itemNo.textContent = cartList.length;
+};
+// SHOP SECTION
+shopSection.addEventListener("click", function (e) {
+  if (!e.target.closest(".items")) return;
+  const index = e.target.closest(".items").dataset.index;
+
+  if (e.target.classList.contains("btn")) {
+    //clicks add to cart button
+    if (e.target.classList.contains("btn-add")) {
+      //update the button display
+      removeDisplay(e.target);
+      //add to cart list
+      cartList.push({ ...products[index - 1], quantity: 1 });
+      //update cart length
+      updateCartItemsNo();
+      //save to localstorage
+      setLocalStorage();
+    } else {
+      //clicks remove from cart button
+      //update the button display
+      addDisplay(e.target);
+      //remove from cart list
+      cartList = cartList.filter((ev) => ev.index != index);
+      //update cart length
+      updateCartItemsNo();
+      //save to localstorage
+      setLocalStorage();
+    }
+  }
+});
+
 //SHOPPING CART MODAL
-function renderCartModal() {
+function renderCartTable() {
   cartTable.innerHTML = "";
   if (cartList.length == 0) {
     const html = `
@@ -91,7 +137,7 @@ function renderCartModal() {
   <tr class="${i % 2 != 0 ? "even" : " "}" data-cartIndex = ${ev.index}>
   <td>${i + 1}</td>
   <td>${ev.name}</td>
-  <td>&#8358; ${ev.price}</td>
+  <td>&#8358; ${ev.price.toLocaleString()}</td>
   <td>
     <i class="fas fa-minus-circle minus-sign ${
       ev.quantity > 1 ? "" : "min-reached"
@@ -107,7 +153,6 @@ function renderCartModal() {
     cartTable.insertAdjacentHTML("afterbegin", html);
   }
 }
-
 function renderTotalAmount() {
   totalAmount.textContent = "";
   const balance = cartList.reduce(
@@ -115,56 +160,51 @@ function renderTotalAmount() {
     0
   );
   totalAmount.innerHTML = `&#8358; ${balance.toLocaleString()}`;
+  return balance;
 }
 cartContainer.addEventListener("click", function () {
+  //clicks cart icon
+  //Makes the modal a bit  responsive
+  if (cartList.length > 3) {
+    shoppingModal.style.position = "absolute";
+  } else {
+    shoppingModal.style.position = "fixed";
+  }
+  //show the shopping modal and overlay
   shoppingModal.classList.remove("hidden");
   modalOverlay.classList.remove("hidden");
-  renderCartModal();
+  renderCartTable();
   renderTotalAmount();
 });
-
 cartTable.addEventListener("click", function (e) {
+  //cart table
+  const cartIndex = e.target.closest("tr").dataset.cartindex;
   //increase quantity
   if (e.target.classList.contains("plus-sign")) {
-    const cartIndex = e.target.closest("tr").dataset.cartindex;
     cartList.forEach((ev) => (ev.index == cartIndex ? (ev.quantity += 1) : ""));
   }
   //decrease quantity
   if (e.target.classList.contains("minus-sign")) {
-    const cartIndex = e.target.closest("tr").dataset.cartindex;
     cartList.forEach((ev) => (ev.index == cartIndex ? (ev.quantity -= 1) : ""));
   }
   //removal
   if (e.target.classList.contains("remove")) {
-    const cartIndex = e.target.closest("tr").dataset.cartindex;
-    cartList.forEach((ev) => (ev.index == cartIndex ? (ev.quantity -= 1) : ""));
     cartList = cartList.filter((ev) => ev.index != cartIndex);
-    renderCartModal();
-    renderTotalAmount();
-
+    //update button display of the shop section
+    shopSection.querySelectorAll(".items").forEach(function (ev) {
+      if (ev.dataset.index == cartIndex) {
+        const btn = ev.querySelector("button");
+        addDisplay(btn);
+      }
+    });
     //update cart length
-    itemNo.textContent = cartList.length;
+    updateCartItemsNo();
   }
-  renderCartModal();
+  //
+  setLocalStorage();
+  renderCartTable();
   renderTotalAmount();
 });
-
-const addHidden = function () {
-  shoppingModal.classList.add("hidden");
-  modalOverlay.classList.add("hidden");
-  //clear all the input fields
-  nameField.value = "";
-  email.value = "";
-  tel.value = "";
-  nameField.style.border = "";
-  email.style.border = "";
-  tel.style.border = "";
-  Error1.textContent = "";
-  Error2.textContent = "";
-  Error3.textContent = "";
-};
-continueShopping.addEventListener("click", addHidden);
-modalOverlay.addEventListener("click", addHidden);
 
 // FORM VALIDATION
 const clearField = function (fieldName, ErrorNo) {
@@ -182,8 +222,10 @@ function nameValidation() {
     nameField.style.border = "1px solid red";
     Error1.textContent = "invalid name";
   } else {
+    saved = nameField.value;
     nameField.style.border = "1px solid green";
     Error1.textContent = "";
+    return true;
   }
 }
 function emailValidation() {
@@ -198,6 +240,7 @@ function emailValidation() {
   } else {
     email.style.border = "1px solid green";
     Error2.textContent = "";
+    return true;
   }
 }
 function telValidation() {
@@ -216,6 +259,7 @@ function telValidation() {
   } else {
     tel.style.border = "1px solid green";
     Error3.textContent = "";
+    return true;
   }
 }
 nameField.addEventListener("blur", nameValidation);
@@ -230,39 +274,112 @@ email.addEventListener("focus", function () {
 tel.addEventListener("focus", function () {
   clearField(tel, Error3);
 });
+// FUNCTION
+const addHidden = function () {
+  shoppingModal.classList.add("hidden");
+  modalOverlay.classList.add("hidden");
+  //clear all the input fields
+  nameField.value = "";
+  email.value = "";
+  tel.value = "";
+  nameField.style.border = "";
+  email.style.border = "";
+  tel.style.border = "";
+  Error1.textContent = "";
+  Error2.textContent = "";
+  Error3.textContent = "";
+};
+function showSummary() {
+  summary.classList.toggle("hidden");
+  summary.querySelector("tbody").innerHTML = "";
+  summary.querySelector(".saved").textContent = saved;
+  const html = cartList.map(
+    (ev, i) => `
+        <tbody>
+          <tr class="${i % 2 != 0 ? "even" : " "}">
+            <td>${i + 1}</td>
+            <td>${ev.name}</td>
+            <td>
+              <span>${ev.quantity}</span>
+            </td>
+          </tr>
+        </tbody>
+  
+  `
+  );
+  summary.querySelector("tbody").insertAdjacentHTML("afterbegin", html);
+}
+const payWithPaystack = function () {
+  let handler = PaystackPop.setup({
+    key: "pk_test_7c22b99ee1892e038577e10159c92c3e84598e84", // Replace with your public key
+    email: email.value,
+    amount: renderTotalAmount() * 100,
+    ref: "" + Math.floor(Math.random() * 1000000000 + 1),
+    onClose: function () {
+      alert("Window closed.");
+    },
+    callback: function () {
+      showSummary();
+    },
+  });
+  handler.openIframe();
+};
+//clicks continue shopping button
+continueShopping.addEventListener("click", addHidden);
+modalOverlay.addEventListener("click", addHidden);
+//clicks checkout button
 checkout.addEventListener("click", function () {
   nameValidation();
   emailValidation();
   telValidation();
-});
-
-// user add to cart
-shopSection.addEventListener("click", function (e) {
-  //add to cart list
-  if (!e.target.closest(".items")) return;
-  const index = e.target.closest(".items").dataset.index;
-
-  //update shop section
-  if (e.target.classList.contains("btn")) {
-    if (e.target.classList.contains("btn-add")) {
-      e.target.style.backgroundColor = "#ffe9d6";
-      e.target.textContent = "remove from cart";
-      e.target.classList.toggle("btn-add");
-
-      //add to cart list
-      cartList.push({ ...products[index - 1], quantity: 1 });
-
-      //update cart length
-      itemNo.textContent = cartList.length;
-    } else {
-      e.target.style.backgroundColor = "#ff9a3d";
-      e.target.textContent = "add to cart";
-      e.target.classList.toggle("btn-add");
-      //remove from cart list
-      cartList = cartList.filter((ev) => ev.index != index);
-
-      //update cart length
-      itemNo.textContent = cartList.length;
-    }
+  if (nameValidation() && emailValidation() && telValidation()) {
+    payWithPaystack();
+    addHidden();
   }
 });
+
+// SUMMARY MODAL
+summaryBtn.addEventListener("click", function () {
+  cartList.forEach(function (cur) {
+    const cartIndex = cur.index;
+    shopSection.querySelectorAll(".items").forEach(function (ev) {
+      if (ev.dataset.index == cartIndex) {
+        const btn = ev.querySelector("button");
+        addDisplay(btn);
+      }
+    });
+  });
+
+  cartList = [];
+  setLocalStorage();
+  summary.classList.add("hidden");
+  updateCartItemsNo();
+});
+// LOCAL STORAGE
+function setLocalStorage() {
+  localStorage.setItem("cartList", JSON.stringify(cartList));
+}
+function getLocalStorage() {
+  const localItem = JSON.parse(localStorage.getItem("cartList"));
+  if (!localItem) return;
+  cartList = localItem;
+}
+
+//page reloads or refresh
+window.addEventListener("load", function () {
+  //get stored browser
+  getLocalStorage();
+  //update button display for shop section according to cart List
+  cartList.forEach(function (cur) {
+    const cartIndex = cur.index;
+    shopSection.querySelectorAll(".items").forEach(function (ev) {
+      if (ev.dataset.index == cartIndex) {
+        const btn = ev.querySelector("button");
+        removeDisplay(btn);
+      }
+    });
+  });
+  //update cart length
+  updateCartItemsNo();
+});
+//385
